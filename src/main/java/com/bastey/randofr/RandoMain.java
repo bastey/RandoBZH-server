@@ -17,6 +17,7 @@ import com.bastey.randofr.entity.Rando;
 import com.bastey.randofr.entity.Randos;
 import com.bastey.randofr.reader.ArretBatchException;
 import com.bastey.randofr.reader.ParserDetailRando;
+import com.bastey.randofr.reader.ParserListeRandoHTML;
 import com.bastey.randofr.reader.ParserListeRandos;
 
 /**
@@ -30,27 +31,30 @@ public class RandoMain {
 			JsonParseException, IOException {
         try {
 
-            EnumUrlRando url = EnumUrlRando.VTT_A_VENIR;
+            //EnumUrlRando url = EnumUrlRando.VTT_A_VENIR;
+        	String url = "http://www.nafix.fr/sorties/vtt-2013/juin-bretagne.html";
             Randos randos = new Randos();
-
+            
             // 1- Recuperation de la liste des randos VTT (ParserXML)
-            ParserListeRandos parserLR = new ParserListeRandos(url);
-            List<String> listeUrlRandos = parserLR.recupererListRandos();
+            //ParserListeRandos parserLR = new ParserListeRandos(url);
+            //List<String> listeUrlRandos = parserLR.recupererListRandos();
+            ParserListeRandoHTML parserLR = new ParserListeRandoHTML(url);
+            parserLR.parserListeRando();
 
-			logger.debug("Nb de randos : {}", listeUrlRandos.size());
+			//logger.debug("Nb de randos : {}", listeUrlRandos.size());
 
             // 2- Recuperation du detail des randos (ParserHTML)
-			ParserDetailRando parserDR = new ParserDetailRando(url);
-			for (String urlRando : listeUrlRandos) {
-				parserDR.parserDetailRando(randos, urlRando);
-			}
+//			ParserDetailRando parserDR = new ParserDetailRando(url);
+//			for (String urlRando : listeUrlRandos) {
+//				parserDR.parserDetailRando(randos, urlRando);
+//			}
 
             // 3- Ecriture du fichier de sortie
-            // ecrireFichierSortie(randos);
+            //ecrireFichierSortie(randos);
 
-			File fileRandos = new File("src/main/resources/rando.json");
-			ObjectMapper mapper = new ObjectMapper();
-			mapper.writeValue(fileRandos, randos.getListeRandos());
+//			File fileRandos = new File("src/main/resources/rando.json");
+//			ObjectMapper mapper = new ObjectMapper();
+//			mapper.writeValue(fileRandos, randos.getListeRandos());
 
 			logger.debug("Traitement terminé");
 
